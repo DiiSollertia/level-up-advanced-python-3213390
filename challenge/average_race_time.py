@@ -5,21 +5,21 @@ import re
 import datetime
 
 
-def get_data():
+def get_data() -> str:
     """Return content from the 10k_racetimes.txt file"""
-    with open('10k_racetimes.txt', 'rt') as file:
+    with open('10k_racetimes.txt', 'rt', encoding=str) as file:
         content = file.read()
     return content
 
 
-def get_rhines_times():
+def get_rhines_times() -> list:
     """Return a list of Jennifer Rhines' race times"""
     races = get_data()
     # Let RegEx look ahead by itself
     return re.findall(r"(\d{2}:\d{2}\.?\d*)\s+(?=Jennifer Rhines)", races)
 
 
-def get_average():
+def get_average() -> str:
     """Return Jennifer Rhines' average race time in the format:
        mm:ss:M where :
        m corresponds to a minutes digit

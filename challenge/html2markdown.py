@@ -1,7 +1,7 @@
 import re
 
 
-def html2markdown(html):
+def html2markdown(html: str) -> str:
     '''Take in html text as input and return markdown'''
     # This isn't just a dictionary, it's a lexicon!
     html2md = {
