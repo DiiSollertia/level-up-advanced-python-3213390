@@ -15,6 +15,7 @@ def get_data():
 def get_rhines_times():
     """Return a list of Jennifer Rhines' race times"""
     races = get_data()
+    # Let RegEx look ahead by itself
     return re.findall(r"(\d{2}:\d{2}\.?\d*)\s+(?=Jennifer Rhines)", races)
 
 
@@ -26,9 +27,10 @@ def get_average():
        M corresponds to a milliseconds digit (no rounding, just the single digit)"""
     racetimes = get_rhines_times()
 
-    def to_dt(times):
+    def to_dt(race: str) -> datetime.timedelta:
+        # A bit hacky, but less error-prone by enforcing typing
         dt = datetime.datetime.strptime(
-            times+(".000000"[len(times)-5:]), "%M:%S.%f")
+            race+(".000000"[len(race)-5:]), "%M:%S.%f")
         return datetime.timedelta(
             minutes=dt.minute,
             seconds=dt.second,
@@ -37,4 +39,5 @@ def get_average():
 
     deltas = list(map(to_dt, racetimes))
     avg = sum(deltas, datetime.timedelta())/len(deltas)
+    # Delay converting time data to str as much as possible
     return str(avg)[2:9]
