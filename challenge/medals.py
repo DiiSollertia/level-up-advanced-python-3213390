@@ -7,7 +7,7 @@ medal = namedtuple('medal', ['City', 'Edition', 'Sport', 'Discipline', 'Athlete'
                              'Event', 'Event_gender', 'Medal'])
 
 # Complete this - medals is a list of medal namedtuples
-medals = [medal(*line.split(';')) for line in olympics.splitlines()]
+medals = [medal(*line.split(';')) for line in olympics.splitlines()[1:]]
 
 
 def get_medals(**kwargs) -> list:
