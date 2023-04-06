@@ -26,18 +26,18 @@ def get_average() -> str:
        s corresponds to a seconds digit
        M corresponds to a milliseconds digit (no rounding, just the single digit)"""
     racetimes = get_rhines_times()
-
-    def to_dt(race: str) -> datetime.timedelta:
-        # A bit hacky, but less error-prone by enforcing typing
-        dt = datetime.datetime.strptime(
-            race+(".000000"[len(race)-5:]), "%M:%S.%f")
-        return datetime.timedelta(
-            minutes=dt.minute,
-            seconds=dt.second,
-            microseconds=dt.microsecond
-        )
-
     deltas = list(map(to_dt, racetimes))
     avg = sum(deltas, datetime.timedelta())/len(deltas)
     # Delay converting time data to str as much as possible
     return str(avg)[2:9]
+
+
+def to_dt(race: str) -> datetime.timedelta:
+    # A bit hacky, but less error-prone by enforcing typing
+    dt = datetime.datetime.strptime(
+        race+(".000000"[len(race)-5:]), "%M:%S.%f")
+    return datetime.timedelta(
+        minutes=dt.minute,
+        seconds=dt.second,
+        microseconds=dt.microsecond
+    )
