@@ -21,6 +21,7 @@ def get_linkedin_dict():
             req = re.findall(r"\d+", line)
             rng = range(int(req[0]), int(req[1])+1)
         elif 'characters:' in line:
+            # Shouldn't have to check mode at this point
             char = re.findall(r"\S+", line)
             pattern = '['+''.join(char[2:])+']+'
             regex = re.compile(pattern)
@@ -44,4 +45,5 @@ def check_linkedin_feature(feature_text, url_or_login) -> bool:
         raise ValueError('Feature needs to be either login or custom_url')
     char = regex.match(feature_text)
     length = len(feature_text) in ref[url_or_login].range
+    # Double check in case there is gibberish at the start of feature_text
     return length and char is not None and (len(char[0]) == len(feature_text))
