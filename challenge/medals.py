@@ -12,9 +12,4 @@ medals = [medal(*line.split(';')) for line in olympics.splitlines()[1:]]
 
 def get_medals(**kwargs) -> list:
     '''Return a list of medal namedtuples '''
-    query = kwargs.items()
-    output = []
-    for m in medals:
-        if all(v == getattr(m, k) for k, v in query):
-            output.append(m)
-    return output
+    return [m for m in medals if all(v == getattr(m, k) for k, v in kwargs.items())]
